@@ -1,4 +1,4 @@
-import db from 'database/models';
+import db from '../../../../database/models';
 
 export default function handler(req, res) {
 
@@ -53,7 +53,8 @@ const getRooms = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const room = await db.Room.findAll({
-    });
+            attributes: ['id', 'name', 'keyRoom', 'userId']
+        });
         return res.json(room)
     
     }catch(error){

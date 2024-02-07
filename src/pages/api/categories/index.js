@@ -1,4 +1,4 @@
-import db from 'database/models';
+import db from '../../../../database/models';
 
 export default function handler(req, res) {
 
@@ -53,7 +53,8 @@ const getCategories = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const category = await db.Category.findAll({
-    });
+            attributes: ['name']
+        });
         return res.json(category)
     
     }catch(error){

@@ -1,4 +1,4 @@
-import db from "database/models"//responsable de detectar el tipo de request 
+import db from "../../../../database/models"//responsable de detectar el tipo de request 
 //e invocar a la funcion adecuada
 export default function handler(req,res) {
     switch(req.method) {

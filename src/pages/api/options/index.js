@@ -1,4 +1,4 @@
-import db from 'database/models';
+import db from '../../../../database/models';
 
 export default function handler(req, res) {
 
@@ -53,7 +53,8 @@ const getOptions = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const option = await db.Option.findAll({
-    });
+            attributes: ['option1', 'option2', 'option3', 'correctA', 'questionId']
+        });
         return res.json(option)
     
     }catch(error){
@@ -99,7 +100,7 @@ const updateOptions = async (req,res) => {
         let {id} = req.query;
         await db.Option.update({...req.body},
             {
-            where :{ id : id }
+            where :{ id : id },
         })
         res.json({
             message: 'Actualizado'

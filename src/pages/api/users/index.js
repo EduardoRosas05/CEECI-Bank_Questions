@@ -1,4 +1,4 @@
-import db from "database/models/index";
+import db from "../../../../database/models";
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 
@@ -32,7 +32,7 @@ const listUsers = async (req, res) => {
       where: {
           id:userId,
       },
-          //include: ['deviceCategory','component','order'],
+      attributes: ['name', 'lastName', 'email', 'password', 'rol']
       });
 
       //console.log(users);
@@ -58,6 +58,7 @@ const listUsers = async (req, res) => {
     }
      users = await db.User.findAll({
       where: whereCondition,
+      attributes: ['name', 'lastName', 'email', 'password', 'rol']
     });
 
     return res.json(users);

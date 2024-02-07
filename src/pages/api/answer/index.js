@@ -1,4 +1,4 @@
-import db from 'database/models';
+import db from '../../../../database/models';
 
 export default function handler(req, res) {
 
@@ -17,7 +17,8 @@ const getAnswers = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const answer = await db.Answer.findAll({
-    });
+            attributes: ['userId', 'questionId', 'optionId']
+        });
         return res.json(answer)
     
     }catch(error){

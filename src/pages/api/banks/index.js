@@ -1,4 +1,4 @@
-import db from 'database/models';
+import db from '../../../../database/models';
 
 export default function handler(req, res) {
 
@@ -53,7 +53,8 @@ const getBanks = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const bank = await db.Bank.findAll({
-    });
+            attributes: ['name', 'roomId']
+        });
         return res.json(bank)
     
     }catch(error){
