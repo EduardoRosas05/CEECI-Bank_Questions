@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Question.init({
-    question: DataTypes.STRING,
+    textQuestion: DataTypes.STRING,
     bankId: DataTypes.INTEGER,
     categoryId: DataTypes.INTEGER
   }, {

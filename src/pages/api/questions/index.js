@@ -53,7 +53,7 @@ const getQuestions = async (req, res) => {
         console.log(req.body);
         //guardar cliente
         const question = await db.Question.findAll({
-            attributes: ['question', 'bankId', 'categoryId']
+            attributes: ['textQuestion', 'bankId', 'categoryId']
         });
         return res.json(question)
     
