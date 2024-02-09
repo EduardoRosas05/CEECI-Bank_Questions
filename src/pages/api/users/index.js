@@ -70,6 +70,8 @@ const listUsers = async (req, res) => {
   }
 };
 
+
+
 //POST: usuarios
 const addUsers = async (req, res) => {
   const datosUsuario = { ...req.body };
@@ -97,6 +99,7 @@ const addUsers = async (req, res) => {
       });
     }
     */
+   
     //asegurar la contraseña
     //usar bcrypt
     //salt: generación de una cadena aleatoria deN longitud
