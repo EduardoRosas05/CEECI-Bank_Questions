@@ -48,33 +48,31 @@ const addRooms = async (req, res) =>  {
 }
 
 const getRooms = async (req, res) => {
-    try{
-        //los datos vienen del req.body
-        console.log(req.body);
-        //guardar cliente
-        const room = await db.Room.findAll({
-            attributes: ['id', 'name', 'keyRoom', 'userId']
-        });
-        return res.json(room)
-    
-    }catch(error){
-        console.log(error);
-        let errors = []
+    const userId = req.query.userId;
 
-        if(error.errors){
-            //extrae la info
-            errors = error.errors.map((item) => ({
-                error: item.message, 
-                field: item.path,
-            }));
+    try {
+        let rooms;
+
+        if (userId) {
+            // Si se proporciona userId, buscar las salas asociadas a ese usuario
+            rooms = await db.Room.findAll({
+                where: {
+                    userId: userId
+                },
+            });
+        } else {
+            // Si no se proporciona userId, obtener todas las salas
+            rooms = await db.Room.findAll({
+            });
         }
 
-        return res.status(400).json({
-            message: `Ocurrió un error al procesar la petición: ${error.message}`,
-            errors,
-        })
+        // Devolver las salas encontradas
+        return res.json(rooms);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Error interno del servidor' });
     }
-}
+};
 
 const deleteRooms = async (req,res) => {
     try{

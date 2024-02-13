@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Option.belongsTo(models.Question, {
         as: 'OptionQuestion',
-        foreignkey:'questionId'
+        foreignKey:'questionId'
         }
       )
-      models.Option.belongsTo(models.Answer, {
+      models.Option.hasMany(models.Answer, {
         as: 'OptionAnswer',
-        foreignkey:'optionId'
+        foreignKey:'optionId'
         }
       )
     }

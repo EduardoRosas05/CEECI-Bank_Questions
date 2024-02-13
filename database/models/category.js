@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Category.belongsTo(models.Question, {
         as: 'CategoryQuestion',
-        foreignkey:'categoryId'
+        foreignKey:'categoryId'
         }
       )
     }

@@ -11,19 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Room.belongsTo(models.User, {
-        as: 'RoomUser',
-        foreignkey:'userId'
+      models.Room.belongsTo(models.User, 
+        {
+        as: 'UserRoom',
+        foreignKey:'userId'
         }
       )
-      models.Room.belongsTo(models.Result, {
+      models.Room.hasMany(models.Result, 
+        {
         as: 'RoomResult',
-        foreignkey:'roomId'
+        foreignKey:'roomId'
         }
       )
-      models.Room.belongsTo(models.Bank, {
+      models.Room.hasMany(models.Bank, {
         as: 'RoomBank',
-        foreignkey:'roomId'
+        foreignKey:'roomId'
         }
       )
     }

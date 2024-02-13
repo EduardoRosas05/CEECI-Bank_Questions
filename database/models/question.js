@@ -13,22 +13,22 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Question.belongsTo(models.Bank, {
         as: 'QuestionBank',
-        foreignkey:'bankId'
+        foreignKey:'bankId'
         }
       )
-      models.Question.belongsTo(models.Category, {
+      models.Question.hasMany(models.Category, {
         as: 'QuestionCategory',
-        foreignkey:'categoryId'
+        foreignKey:'categoryId'
         }
       )
-      models.Question.belongsTo(models.Option, {
+      models.Question.hasMany(models.Option, {
         as: 'QuestionOption',
-        foreignkey:'questionId'
+        foreignKey:'questionId'
         }
       )
-      models.Question.belongsTo(models.Answer, {
+      models.Question.hasMany(models.Answer, {
         as: 'QuestionAnswer',
-        foreignkey:'questionId'
+        foreignKey:'questionId'
         }
       )
     }

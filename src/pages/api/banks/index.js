@@ -48,14 +48,27 @@ const addBanks = async (req, res) =>  {
 }
 
 const getBanks = async (req, res) => {
+    const roomId = req.query.roomId;
+
     try{
         //los datos vienen del req.body
-        console.log(req.body);
+        let banks;
         //guardar cliente
-        const bank = await db.Bank.findAll({
-            attributes: ['name', 'roomId']
-        });
-        return res.json(bank)
+        if(roomId){
+            banks = await db.Bank.findAll({
+                where: {
+                    roomId: roomId
+                },
+                include: ['RoomBank']
+            });
+        }else {
+            banks = await db.Bank.findAll({
+                include: ['RoomBank']
+            });
+            
+        }
+
+        return res.json(banks)
     
     }catch(error){
         console.log(error);
