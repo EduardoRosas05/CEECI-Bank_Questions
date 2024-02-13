@@ -48,14 +48,28 @@ const addQuestions = async (req, res) =>  {
 }
 
 const getQuestions = async (req, res) => {
+
+    const bankId = req.query.bankId;
+
     try{
         //los datos vienen del req.body
-        console.log(req.body);
+        let questions;
         //guardar cliente
-        const question = await db.Question.findAll({
-            attributes: ['textQuestion', 'bankId', 'categoryId']
-        });
-        return res.json(question)
+        if(bankId){
+            questions = await db.Question.findAll({
+                where: {
+                    bankId: bankId
+                },
+                include: ['QuestionBank']
+            });
+        }else {
+            questions = await db.Question.findAll({
+                include: ['QuestionBank']
+            });
+            
+        }
+
+        return res.json(questions)
     
     }catch(error){
         console.log(error);
