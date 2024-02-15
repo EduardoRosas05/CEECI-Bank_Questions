@@ -48,13 +48,23 @@ const addOptions = async (req, res) =>  {
 }
 
 const getOptions = async (req, res) => {
+
+    const donkey = req.query.questionId;
+
     try{
-        //los datos vienen del req.body
-        console.log(req.body);
-        //guardar cliente
-        const option = await db.Option.findAll({
-            attributes: ['option1', 'option2', 'option3', 'correctA', 'questionId']
-        });
+        let option;
+            if(donkey){
+                option = await db.Option.findAll({
+                    where: {
+                        questionId : donkey 
+                    },
+                    include: ['OptionQuestion']
+                });
+            } else {
+                option = await db.Option.findAll({
+                    include: ['OptionQuestion']
+                });
+            }
         return res.json(option)
     
     }catch(error){
