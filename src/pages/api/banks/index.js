@@ -89,23 +89,36 @@ const getBanks = async (req, res) => {
     }
 }
 
-const deleteBanks = async (req,res) => {
-    try{
-      const {id} = req.query;
+const deleteBanks = async (req, res) => {
+    try {
+        const { id } = req.query;
 
-        await db.Bank.destroy({
-            where: { id: id }
-        })
+        const bank = await db.Bank.findOne({ where: { id: id } });
+        if (!bank) {
+            return res.status(400).json({ error: true, message: 'No se encontró el banco' });
+        }
+        if (bank) {
+            const question = await db.Question.findOne({ where: { bankId: bank.id } });
+            if (question) {
+                const option = await db.Option.findOne({where: {questionId: question.id}});
+                if (option){
+                    await db.Answer.destroy({ where: { optionId: option.id } });
+                    await db.Option.destroy({ where: { questionId: question.id } });
+                }
+                await db.Question.destroy({ where: { bankId: bank.id } });
+            }
+            await db.Bank.destroy({ where: { id: bank.id } });
+        }
 
         res.json({
             message: 'Eliminado'
-        })
-
-      }
-         catch (error){
-            res.status(400).json({ error: "error al momento de borrar el estado"})
+        });
+    } catch (error) {
+        console.error('Error al eliminar la sala:', error);
+        res.status(500).json({ error: 'Error interno del servidor al eliminar la sala', details: error.message });
     }
-}
+};
+
 
 const updateBank = async (req,res) => {
 
