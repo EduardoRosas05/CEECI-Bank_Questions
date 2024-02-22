@@ -108,6 +108,12 @@ const updateOptions = async (req,res) => {
 
     try{
         let {id} = req.query;
+
+        const { option1, option2, option3, correctA } = req.body;
+        if (typeof option1 !== 'string' || typeof option2 !== 'string' || typeof option3 !== 'string' || typeof correctA !== 'string') {
+          throw new Error('Los campos deben ser strings');
+        }
+        
         await db.Option.update({...req.body},
             {
             where :{ id : id },

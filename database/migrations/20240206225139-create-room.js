@@ -12,8 +12,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      keyRoom: {
-        type: Sequelize.INTEGER
+      enabled: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+          defaultValue: true
       },
       userId: {
         type: Sequelize.INTEGER,

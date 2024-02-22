@@ -12,8 +12,10 @@ export default function handler(req, res) {
             return deleteRooms(req, res);
         case 'PUT':
             return updateRooms(req,res);
+        case 'PATCH':
+            return patchRooms(req, res);
         default:
-            res.status(400).json({error: true, message:'Petición errónea, utiliza Read,Post,Put o Delete'});
+            res.status(400).json({error: true, message:'Petición errónea, utiliza Read, Post, Put o Delete'});
     }
 }
 
@@ -120,6 +122,38 @@ const updateRooms = async (req,res) => {
         })
         res.json({
             message: 'Actualizado'
+        })
+
+      }
+      catch (error) {
+
+        console.log(error);
+
+        let errors = [];
+        if (error.errors){
+            errors = error.errors.map((item) => ({
+                error: item.message,
+                field: item.path,
+                }));
+        }
+      return res.status(400).json( {
+        error: true,
+        message: `Ocurrió un error al procesar la petición: ${error.message}`,
+        errors,
+        } 
+      )
+    }
+}
+
+const patchRooms = async (req,res) => {
+    try{
+        let {id} = req.query;
+        await db.Room.update({...req.body},
+            {
+            where :{ id : id }
+        })
+        res.json({
+            message: 'Cambiado  '
         })
 
       }
