@@ -10,16 +10,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       option1: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       option2: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       option3: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       correctA: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, 
+        allowNull: false,
       },
       questionId: {
         type: Sequelize.INTEGER,

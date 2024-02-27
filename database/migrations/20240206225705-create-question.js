@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       textQuestion: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       bankId: {
         type: Sequelize.INTEGER,
