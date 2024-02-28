@@ -49,7 +49,7 @@ const addQuestions = async (req, res) =>  {
 
 const getQuestions = async (req, res) => {
 
-    const bankId = req.query.bankId;
+    const {bankId, enabled } = req.query;
 
     try{
         //los datos vienen del req.body
@@ -62,7 +62,13 @@ const getQuestions = async (req, res) => {
                 },
                 include: ['QuestionBank']
             });
-        }else {
+        }else if (enabled !== undefined) {
+            questions = await db.Question.findAll({
+                where: {
+                    enabled: enabled === 'true'
+                }
+            })
+        } else {
             questions = await db.Question.findAll({
                 include: ['QuestionBank']
             });
