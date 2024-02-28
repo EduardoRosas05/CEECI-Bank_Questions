@@ -12,6 +12,8 @@ export default function handler(req, res) {
             return deleteQuestions(req, res);
         case 'PUT':
             return updateQuestions(req,res);
+        case 'PATCH': 
+            return patchQuestions(req, res);
         default:
             res.status(400).json({error: true, message:'Petición errónea, utiliza Read,Post,Put o Delete'});
     }
@@ -132,6 +134,38 @@ const updateQuestions = async (req,res) => {
         })
         res.json({
             message: 'Actualizado'
+        })
+
+      }
+      catch (error) {
+
+        console.log(error);
+
+        let errors = [];
+        if (error.errors){
+            errors = error.errors.map((item) => ({
+                error: item.message,
+                field: item.path,
+                }));
+        }
+      return res.status(400).json( {
+        error: true,
+        message: `Ocurrió un error al procesar la petición: ${error.message}`,
+        errors,
+        } 
+      )
+    }
+}
+
+const patchQuestions = async (req,res) => {
+    try{
+        let {id} = req.query;
+        await db.Question.update({...req.body},
+            {
+            where :{ id : id }
+        })
+        res.json({
+            message: 'Cambiado  '
         })
 
       }
