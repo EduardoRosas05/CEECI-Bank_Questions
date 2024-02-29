@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Room.init({
     name: DataTypes.STRING,
-    keyRoom: DataTypes.INTEGER,
+    enabled: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER
   }, {
     sequelize,
