@@ -74,7 +74,7 @@ const loginUser = async (req, res) => {
       attributes: ['id', 'name','email', 'password', 'rol']
     });
     if (!user) {
-      return res.status(400).json({ error: true, message: "Este correo no ha sido regsitrado" })
+      return res.status(400).json({ error: true, message: "Este correo no ha sido registrado" })
     }
 
     // Verifica la contraseña

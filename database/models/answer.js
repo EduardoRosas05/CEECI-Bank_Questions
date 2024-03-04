@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'optionId'
         }
       )
-      models.Answer.hasMany(models.User, {
+      models.Answer.belongsTo(models.User, {
         as: 'AnswerUser',
         foreignKey:'userId'
         }
