@@ -29,9 +29,15 @@ const getBanks = async (req, res) => {
                       as: 'BankQuestion',
                       attributes: ['textQuestion'],
                       include: [
+                        {
+                            model: db.Option,
+                            as: 'QuestionOption',
+                            attributes: ['correctA']
+                        },
                           {
                               model: db.Answer,
                               as: 'QuestionAnswer',
+                              attributes: ['selection'],
                               include: [
                                 {
                                     model: db.User,
@@ -56,9 +62,15 @@ const getBanks = async (req, res) => {
                       as: 'BankQuestion',
                       attributes: ['textQuestion'],
                       include: [
+                        {
+                            model: db.Option,
+                            as: 'QuestionOption',
+                            attributes: ['correctA']
+                        },
                           {
                               model: db.Answer,
                               as: 'QuestionAnswer',
+                              attributes: ['selection'],
                               include: [
                                 {
                                     model: db.User,
@@ -86,6 +98,11 @@ const getBanks = async (req, res) => {
                   as: 'BankQuestion',
                   attributes: ['textQuestion'],
                   include: [
+                    {
+                        model: db.Option,
+                        as: 'QuestionOption',
+                        attributes: ['correctA']
+                    },
                       {
                           model: db.Answer,
                           as: 'QuestionAnswer',
@@ -101,7 +118,7 @@ const getBanks = async (req, res) => {
                   ]
               }
           ]
-      });    
+        });    
       }
 
       return res.json(banks)
