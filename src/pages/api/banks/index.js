@@ -61,7 +61,7 @@ const getBanks = async (req, res) => {
                 where: {
                     roomId: roomId
                 },
-                include: ['RoomBank']
+                include: ['BankQuestion']
             });
         }else if(enabled !== undefined) {
             banks = await db.Bank.findAll({
@@ -71,7 +71,7 @@ const getBanks = async (req, res) => {
             })
         }else {
             banks = await db.Bank.findAll({
-                include: ['RoomBank']
+                include: ['BankQuestion']
             });
             
         }

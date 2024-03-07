@@ -1,3 +1,4 @@
+import { where } from 'sequelize';
 import db from '../../../../database/models';
 
 export default function handler(req, res) {
@@ -17,13 +18,28 @@ export default function handler(req, res) {
 }
 
 const getAnswers = async (req, res) => {
+    const {userId, questionId} = req.query;
+
     try{
-        //los datos vienen del req.body
-        console.log(req.body);
-        //guardar cliente
-        const answer = await db.Answer.findAll({
-            attributes: ['userId', 'questionId', 'optionId']
+        let answer;
+       if (userId) {
+        answer = await db.Answer.findAll({
+            where: {
+                userId: userId
+            }
+        })
+        }else if (questionId){
+            answer = await db.Answer.findAll({
+                where: {
+                    questionId: questionId,
+                }
+            })
+       }else {
+        answer = await db.Answer.findAll({
+            attributes: ['userId', 'questionId', 'optionId', 'selection']
         });
+       }
+        
         return res.json(answer)
     
     }catch(error){
