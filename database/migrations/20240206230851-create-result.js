@@ -10,10 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       points: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       dateTest: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       roomId: {
         type: Sequelize.INTEGER,

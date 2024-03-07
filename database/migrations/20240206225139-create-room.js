@@ -10,12 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       enabled: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+          defaultValue: true
       },
       userId: {
         type: Sequelize.INTEGER,

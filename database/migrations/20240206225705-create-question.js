@@ -10,7 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       textQuestion: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      enabled: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+          defaultValue: true
       },
       bankId: {
         type: Sequelize.INTEGER,
