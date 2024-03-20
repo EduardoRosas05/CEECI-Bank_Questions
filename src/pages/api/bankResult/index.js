@@ -37,7 +37,7 @@ const getBanks = async (req, res) => {
                           {
                               model: db.Answer,
                               as: 'QuestionAnswer',
-                              attributes: ['selection'],
+                              attributes: ['selection', 'userId'],
                               include: [
                                 {
                                     model: db.User,
@@ -70,7 +70,7 @@ const getBanks = async (req, res) => {
                           {
                               model: db.Answer,
                               as: 'QuestionAnswer',
-                              attributes: ['selection'],
+                              attributes: ['selection', 'userId'],
                               include: [
                                 {
                                     model: db.User,
@@ -106,7 +106,7 @@ const getBanks = async (req, res) => {
                       {
                           model: db.Answer,
                           as: 'QuestionAnswer',
-                          attributes: ['selection'],
+                          attributes: ['selection', 'userId'],
                           include: [
                               {
                                   model: db.User,

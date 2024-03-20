@@ -80,7 +80,7 @@ const getRooms = async (req, res) => {
 };
 
 
-
+// corrección de la funcion Delete.
 const deleteRooms = async (req, res) => {
     try {
         const { id } = req.query;
@@ -92,18 +92,18 @@ const deleteRooms = async (req, res) => {
 
         const bank = await db.Bank.findOne({ where: { roomId: room.id } });
         if (bank) {
-            const question = await db.Question.findOne({ where: { bankId: bank.id } });
-            if (question) {
-                const option = await db.Option.findOne({where: {questionId: question.id}});
-                if (option){
+            const questions = await db.Question.findAll({ where: { bankId: bank.id } });
+            for (const question of questions) {
+                const options = await db.Option.findAll({ where: { questionId: question.id } });
+                for (const option of options) {
                     await db.Answer.destroy({ where: { optionId: option.id } });
-                    await db.Option.destroy({ where: { questionId: question.id } });
                 }
-                await db.Question.destroy({ where: { bankId: bank.id } });
+                await db.Option.destroy({ where: { questionId: question.id } });
             }
-            await db.Bank.destroy({ where: { roomId: room.id } });
+            await db.Question.destroy({ where: { bankId: bank.id } });
         }
 
+        await db.Bank.destroy({ where: { roomId: room.id } });
         await db.Room.destroy({ where: { id: room.id } });
 
         res.json({
@@ -114,6 +114,7 @@ const deleteRooms = async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor al eliminar la sala', details: error.message });
     }
 };
+
 
 
 const updateRooms = async (req,res) => {

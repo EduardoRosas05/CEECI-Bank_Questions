@@ -49,11 +49,11 @@ const addOptions = async (req, res) =>  {
 
 const getOptions = async (req, res) => {
 
-    const donkey = req.query.questionId;
+    const questionId = req.query;
 
     try{
         let option;
-            if(donkey){
+            if(questionId){
                 option = await db.Option.findAll({
                     where: {
                         questionId : donkey 

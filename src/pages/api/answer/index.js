@@ -36,7 +36,7 @@ const getAnswers = async (req, res) => {
             })
        }else {
         answer = await db.Answer.findAll({
-            attributes: ['userId', 'questionId', 'optionId', 'selection']
+            attributes: ['userId', 'questionId', 'optionId', 'selection', 'createdAt']
         });
        }
         
