@@ -80,7 +80,6 @@ const getRooms = async (req, res) => {
 };
 
 
-// corrección de la funcion Delete.
 const deleteRooms = async (req, res) => {
     try {
         const { id } = req.query;

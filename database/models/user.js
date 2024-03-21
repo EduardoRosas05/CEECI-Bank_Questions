@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'userId'
         }
       )
+      models.User.hasMany(models.UserGameGroups,
+        {
+        as: 'UserGameGroups',
+        foreignKey:'userId'
+        }
+      )
     }
   }
   User.init({

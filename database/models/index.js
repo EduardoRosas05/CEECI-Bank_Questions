@@ -27,6 +27,9 @@ import room from './room';
 import question from './question';
 import option from './option';
 import answer from './answer';
+import cards from './cards';
+import gamegroups from './gamegroups';
+import usergamegroups from './usergamegroups';
 
 db.User = user(sequelize, Sequelize.DataTypes);
 db.Bank = bank(sequelize, Sequelize.DataTypes);
@@ -35,6 +38,9 @@ db.Room = room(sequelize, Sequelize.DataTypes);
 db.Question = question(sequelize, Sequelize.DataTypes);
 db.Option = option(sequelize, Sequelize.DataTypes);
 db.Answer = answer(sequelize, Sequelize.DataTypes);
+db.Cards = cards(sequelize, Sequelize.DataTypes);
+db.GameGroups = gamegroups(sequelize, Sequelize.DataTypes);
+db.UserGameGroups = usergamegroups(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
