@@ -1,77 +1,54 @@
-import { promises as fs } from "fs";
+import extToMimes from "../../../../database/config/extToMimes";
 import path from "path";
-import formidable, { File } from 'formidable';
-import db from '../../../../database/models';
-
+import fs from "fs";
 
 export default function handler(req, res) {
-
-    switch(req.method){
-        case 'GET':
-            return getImage(req, res);
-        default:
-            res.status(400).json({error: true, message:'Petición errónea, utiliza Get'});
+    switch(req.method) {
+      case 'GET':
+        return viewImage(req, res);
+  
+      default:
+        res.status(400).json({error: true, message: 'Peticion errónea'});
     }
 }
 
-const getImage = async (req, res) => {
+const viewImage = async (req, res) => {
+    try { 
+        const fileName = req.query.file;
+        const serverFilesPath = "/Users/erikg/Desktop/CEECI-Bank_Questions/uploads/";
 
-    const { filename } = req.query;
+        if (fileName === 'cards') {
+            const cardsFolderPath = path.join(serverFilesPath, 'cards');
+            const cardFiles = fs.readdirSync(cardsFolderPath);
+            
+            res.json(cardFiles.map(file => {
+                return {
+                    name: file,
+                    url: `http://localhost:3000/api/card/view?file=cards/${file}`
+                };
+            }));
+        } else {
+            const filePath = path.join(serverFilesPath, fileName);
 
-    try {
-        // Obtener la ruta completa del archivo de imagen
-        const imagePath = path.resolve(process.cwd(), 'database/uploads/cards', filename);
-        console.log(imagePath);
-        // Verificar si el archivo existe
-        if (!fs.existsSync(imagePath)) {
-            return res.status(404).json({ error: true, message: 'La imagen no existe' });
+            if(!fs.existsSync(filePath)) {
+                res.setHeader("Content-Type", "text/html");
+                res.write("<h1>El archivo no existe</h1>");
+                return res.status(404);
+            }
+
+            const ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+            res.setHeader("Content-Type", extToMimes[ext] || 'application/document');
+            res.setHeader("Content-Disposition", "inline");
+
+            const fileBuffer = fs.readFileSync(filePath);
+            res.send(fileBuffer);
         }
-
-        // Enviar el archivo como respuesta
-        res.setHeader('Content-Type', 'image/jpeg'); // Cambia el tipo MIME según el tipo de imagen
-        fs.createReadStream(imagePath).pipe(res);
-
     } catch (error) {
-        console.error('Error al obtener la imagen:', error);
-        res.status(500).json({ error: true, message: 'Ocurrió un error al obtener la imagen' });
+        return res.status(400).json(
+            {
+              error: true,
+              message: `Ocurrió un error al leer el archivo: ${error.message}`
+            }
+        )
     }
-};
-//C:/Users/erikg/Desktop/CEECI-Bank_Questions/uploads
-/* const uploadImage = async (req, res) => {
-    try {
-
-        const card = await db.Cards.create({...req.body});
-
-        res.status(200).json({
-            card,
-            message: 'Registrado'
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        let errors = [];
-        if (error.errors){
-            errors = error.errors.map((item) => ({
-                error: item.message,
-                field: item.path,
-                }));
-        }
-      return res.status(400).json( {
-        error: true,
-        message: `Ocurrió un error al procesar la petición: ${error.message}`,
-        errors,
-        } 
-      )
-    }
-}; */
-
-
-
-
-
-
-
-
-
+}

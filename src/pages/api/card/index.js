@@ -38,7 +38,7 @@ const uploadImage = async (req, res) => {
         }).catch(e => {
           return res.status(400).json({ 
             success: false,
-            message: 'Ocurrio un error al guardar el documento.',
+            message: 'Ocurrio un error al guardar la imagen.',
           });
         });
     
@@ -112,11 +112,3 @@ const uploadImage = async (req, res) => {
         )
       }
 };
-
-
-
-
-
-
-
-

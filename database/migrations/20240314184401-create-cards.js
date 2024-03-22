@@ -12,6 +12,9 @@ module.exports = {
       cardName: {
         type: Sequelize.STRING
       },
+      typeCard: {
+        type: Sequelize.STRING
+      },
       image_path: {
         type: Sequelize.STRING
       },
