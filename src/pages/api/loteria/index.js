@@ -21,6 +21,7 @@ export default function handler(req, res) {
       });
       } else {
         image = await db.Cards.findAll({
+          //attributes: ['typeCard','image_path'],
           order: [
             ['typeCard', 'ASC'] // ASC para orden ascendente, DESC para orden descendente
           ]

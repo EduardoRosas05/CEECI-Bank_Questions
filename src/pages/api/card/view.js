@@ -41,7 +41,7 @@ const viewImage = async (req, res) => {
             res.setHeader("Content-Disposition", "inline");
 
             const fileBuffer = fs.readFileSync(filePath);
-            res.send(fileBuffer);
+            res.send(fileBuffer);       
         }
     } catch (error) {
         return res.status(400).json(
